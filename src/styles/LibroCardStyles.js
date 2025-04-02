@@ -1,24 +1,21 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   card: {
-    width: 200,
+    width: width * 0.85,
+    height: height * 0.6,
     marginHorizontal: 15,
     padding: 10,
     backgroundColor: "#fff",
     borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
     alignItems: "center",
   },
   cover: {
-    width: 120,
-    height: 180,
-    resizeMode: "cover",
-    borderRadius: 5,
+    width: "100%",
+    height: 350,
+    resizeMode: "contain",
   },
   title: {
     fontSize: 16,
