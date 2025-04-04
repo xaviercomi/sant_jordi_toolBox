@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,9 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
-  DrawerLayoutAndroid,
-  Button,
   SafeAreaView,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 import styles from "../styles/LibroStyles.js";
 import swordBackIcon from "../../assets/backIcon.png";
@@ -25,11 +24,7 @@ const LibroScreen = () => {
   const [libros, setLibros] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const drawer = useRef(null);
-  const allGenres =
-    libros && libros.length > 0
-      ? [...new Set(libros.map((libro) => libro.genero))]
-      : [];
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchLibros = async () => {
@@ -50,87 +45,79 @@ const LibroScreen = () => {
     fetchLibros();
   }, []);
 
-  const navigationContainer = () => (
-    <View style={styles.navigationContainer}>
-      <Text style={styles.textDrawer}>Opcions de filtratge</Text>
-
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#FFF" />
-      ) : (
-        <MultiSelect
-          items={allGenres.map((genre) => ({ id: genre, name: genre }))}
-          uniqueKey="id"
-          onSelectedItemsChange={setSelectedGenres}
-          selectedItems={selectedGenres}
-          selectText="Seleccionar géneros"
-          searchInputPlaceholderText="Buscar géneros..."
-          altFontFamily="ProximaNova-Light"
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#CCC"
-          selectedItemTextColor="#FFF"
-          selectedItemIconColor="#FFF"
-          itemTextColor="#000"
-          displayKey="name"
-          searchInputStyle={{ color: "#CCC" }}
-          submitButtonColor="#778899"
-          submitButtonText="Aplicar"
-          styleDropdownMenu={styles.dropdownMenu}
-          styleInputGroup={styles.inputGroup}
-          styleItemsContainer={styles.itemsContainer}
-          hideSubmitButton={false}
-        />
-      )}
-      <Button
-        color="#778899"
-        title="tanca"
-        onPress={() => drawer.current?.closeDrawer()}
-      />
-    </View>
-  );
-
-  const filterByGenre = (genre) => {
-    if (genre === "all") {
-      setSelectedGenres(null);
-    } else {
-      setSelectedGenres(genre);
-    }
-  };
+  const allGenres =
+    libros.length > 0 ? [...new Set(libros.map((libro) => libro.genero))] : [];
 
   const filteredBooks =
     selectedGenres.length > 0
       ? libros.filter((libro) => selectedGenres.includes(libro.genero))
       : libros;
 
-  if (isLoading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FFF" />
+  const FilterModal = () => (
+    <Modal
+      visible={modalVisible}
+      animationType="slide"
+      onRequestClose={() => setModalVisible(false)}
+      transparent={false}
+    >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalHeader}>
+          <Text style={styles.modalTitle}>Filtrar per gènere</Text>
+          <TouchableOpacity
+            onPress={() => setModalVisible(false)}
+            style={styles.closeButton}
+          >
+            <Text style={styles.closeText}>Tancar</Text>
+          </TouchableOpacity>
+        </View>
+
+        <MultiSelect
+          items={allGenres.map((genre) => ({ id: genre, name: genre }))}
+          uniqueKey="id"
+          onSelectedItemsChange={setSelectedGenres}
+          selectedItems={selectedGenres}
+          selectText="Gènere literari"
+          styleDropdownMenu={styles.dropdownMenu}
+          styleItemsContainer={styles.itemsContainer}
+          searchInputPlaceholderText="Cerca gèneres..."
+          displayKey="name"
+          hideSubmitButton={false}
+          tagBorderColor="#696969"
+          tagTextColor="#FFF"
+          searchInputStyle={styles.searchInput}
+          selectedItemTextColor={styles.multiSelectText.color}
+          selectedItemIconColor="#FFF"
+          itemTextColor={styles.multiSelectText.color}
+          submitButtonColor="#444"
+          submitButtonText="Filtrar"
+          styleInputGroup={styles.closedSelector}
+          styleTextDropdown={styles.closedSelectorText}
+        />
       </View>
-    );
-  }
+    </Modal>
+  );
 
   return (
-    <DrawerLayoutAndroid
-      style={styles.drawer}
-      ref={drawer}
-      drawerWidth={width * 0.6}
-      renderNavigationView={navigationContainer}
-    >
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
         <Text style={styles.text}>Recomana un llibre</Text>
-
         <TouchableOpacity
-          onPress={() => {
-            drawer.current?.openDrawer();
-          }}
+          onPress={() => setModalVisible(true)}
           style={styles.filterButton}
         >
           <Image source={filterIcon} style={styles.filterIcon} />
         </TouchableOpacity>
+      </View>
 
+      <FilterModal />
+
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#FFF" />
+        </View>
+      ) : (
         <FlatList
-          data={libros}
+          data={filteredBooks}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
@@ -145,15 +132,15 @@ const LibroScreen = () => {
             </View>
           )}
         />
+      )}
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Main")}
-          style={styles.backButton}
-        >
-          <Image source={swordBackIcon} style={styles.backIcon} />
-        </TouchableOpacity>
-      </SafeAreaView>
-    </DrawerLayoutAndroid>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Main")}
+        style={styles.backButton}
+      >
+        <Image source={swordBackIcon} style={styles.backIcon} />
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
 

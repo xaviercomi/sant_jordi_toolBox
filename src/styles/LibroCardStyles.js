@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     height: height * 0.6,
     marginHorizontal: 15,
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#353535",
     borderRadius: 10,
     alignItems: "center",
   },
@@ -18,19 +18,32 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   title: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
     marginTop: 8,
     textAlign: "center",
+    color: "gray",
   },
   author: {
-    fontSize: 14,
+    fontSize: 15,
     color: "gray",
   },
   genre: {
-    fontSize: 12,
-    color: "blue",
+    fontSize: 13,
+    color: "#ff8c00",
     fontStyle: "italic",
+  },
+  shareButton: {
+    marginTop: 10,
+    backgroundColor: "#696969",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  shareButtonText: {
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

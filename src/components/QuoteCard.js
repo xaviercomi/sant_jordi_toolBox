@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import * as Sharing from "expo-sharing";
-import * as FileSystem from "expo-file-system";
 import styles from "../styles/QuoteCardStyles.js";
 
 const QuoteCard = ({ quote, author }) => {
