@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +39,40 @@ const styles = StyleSheet.create({
   homeIcon: {
     width: 40,
     height: 40,
+  },
+  modalButton: {
+    marginTop: 25,
+    padding: 20,
+    width: width * 0.85,
+    alignItems: "center",
+    backgroundColor: "#333",
+    borderRadius: 5,
+  },
+  modalButtonText: {
+    fontSize: 17,
+    color: "#C0C0C0",
+  },
+  modalView: {
+    width: width * 0.9,
+    height: height * 0.85,
+    margin: 20,
+    backgroundColor: "#444",
+    borderRadius: 5,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  },
+  modalButtonClose: {
+    backgroundColor: "#696969",
+    padding: 10,
+    borderRadius: 5,
+  },
+  modalButtonCloseText: {
+    fontSize: 15,
   },
 });
 

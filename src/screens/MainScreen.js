@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+  TouchableHighlight,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/MainStyles.js";
@@ -13,18 +20,46 @@ import homeIcon from "../../assets/homeIcon.png";
 const MainScreen = () => {
   const navigation = useNavigation();
   const [userName, setUserName] = useState("");
+  const [user, setUser] = useState(null);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    const fetchUserName = async () => {
-      const storedName = await AsyncStorage.getItem("userName");
-      setUserName(storedName || "Usuario");
+    const fetchUser = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem("user");
+        const parsedUser = storedUser ? JSON.parse(storedUser) : null;
 
-      setTimeout(() => {
-        setShowWelcome(false);
-      }, 1000);
+        if (parsedUser) {
+          setUser(parsedUser);
+          setUserName(parsedUser.nombre || "");
+        }
+      } catch (error) {
+        console.error("Error loading user from AsyncStorage:", error);
+      } finally {
+        setTimeout(() => {
+          setShowWelcome(false);
+        }, 1000);
+      }
     };
-    fetchUserName();
+
+    fetchUser();
+
+    const init = async () => {
+      const storedName = await AsyncStorage.getItem("userName");
+      const hasVisited = await AsyncStorage.getItem("hasVisitedMainScreen");
+
+      setUserName(storedName);
+
+      if (!hasVisited) {
+        setShowWelcome(true);
+        await AsyncStorage.setItem("hasVisitedMainScreen", "true");
+      } else {
+        setShowWelcome(false);
+      }
+    };
+
+    init();
   }, []);
 
   return (
@@ -60,8 +95,40 @@ const MainScreen = () => {
               <Text style={styles.textIcon}>Llibreries</Text>
             </View>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.modalButton}
+            onPress={() => {
+              setModalVisible(true);
+            }}
+          >
+            <Text style={styles.modalButtonText}>Amb qui has compartit</Text>
+          </TouchableOpacity>
         </View>
       )}
+
+      <View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.modalView}>
+            <Text> Hello! mother fucker</Text>
+            <TouchableHighlight
+              style={styles.modalButtonClose}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.modalButtonCloseText}>Tanca</Text>
+            </TouchableHighlight>
+          </View>
+        </Modal>
+      </View>
 
       <TouchableOpacity
         style={styles.homeButton}
