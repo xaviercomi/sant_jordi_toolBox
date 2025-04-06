@@ -13,12 +13,18 @@ import { useNavigation } from "@react-navigation/native";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 
+import { sendInteraction } from "../utils/sendInteraction.js";
+import Dialog from "react-native-dialog";
+
 const { width } = Dimensions.get("window");
 
 const RosaScreen = () => {
   const navigation = useNavigation();
   const [roses, setRoses] = useState([]);
   const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedRose, setSelectedRose] = useState(null);
+  const [recipientName, setRecipientName] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
     const fetchRoses = async () => {
@@ -49,20 +55,29 @@ const RosaScreen = () => {
     ? roses.filter((rose) => rose.color === selectedColor)
     : roses;
 
-  const shareRose = async (imageUrl) => {
+  const shareRose = async (rose) => {
     try {
-      const localUri = `${FileSystem.cacheDirectory}shared-image.jpg`;
-      const downloadedImage = await FileSystem.downloadAsync(
-        imageUrl,
-        localUri
-      );
-
       if (!(await Sharing.isAvailableAsync())) {
         alert("Sharing is not available on this device");
         return;
       }
 
-      await Sharing.shareAsync(downloadedImage.uri);
+      const imageUrl = `http://192.168.0.10:5000/${rose.imagen_url}`;
+      const localUri = `${FileSystem.cacheDirectory}${rose.id}-shared.jpg`;
+
+      const downloadedImage = await FileSystem.downloadAsync(
+        imageUrl,
+        localUri
+      );
+
+      const shareResult = await Sharing.shareAsync(downloadedImage.uri);
+
+      if (shareResult?.action === Sharing.sharedAction) {
+        setSelectedRose(rose);
+        setShowDialog(true);
+      } else {
+        console.log("User dismissed sharing or it returned null.");
+      }
     } catch (error) {
       console.log("Error sharing image:", error);
     }
@@ -122,11 +137,7 @@ const RosaScreen = () => {
         decelerationRate="fast"
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() =>
-              shareRose(`http://192.168.0.10:5000/${item.imagen_url}`)
-            }
-          >
+          <TouchableOpacity onPress={() => shareRose(item)}>
             <Image
               source={{ uri: `http://192.168.0.10:5000/${item.imagen_url}` }}
               style={styles.roseImage}
@@ -138,6 +149,39 @@ const RosaScreen = () => {
       <TouchableOpacity onPress={() => navigation.navigate("Main")}>
         <Image source={swordBackIcon} style={styles.backIcon} />
       </TouchableOpacity>
+
+      <Dialog.Container visible={showDialog}>
+        <Dialog.Title>Vols guardar el nom del destinatari?</Dialog.Title>
+        <Dialog.Description>
+          Sabràs amb qui has compartit al teu registre personal
+        </Dialog.Description>
+        <Dialog.Input
+          placeholder="Nom del destinatari"
+          value={recipientName}
+          onChangeText={setRecipientName}
+        />
+        <Dialog.Button
+          label="Cancel·la"
+          onPress={() => {
+            setShowDialog(false);
+            setRecipientName("");
+          }}
+        />
+        <Dialog.Button
+          label="Desa"
+          onPress={async () => {
+            const nameToSend =
+              recipientName.trim() !== "" ? recipientName : "Desconegut";
+            await sendInteraction({
+              destinatario_nombre: nameToSend,
+              tipo: "rosa",
+              id: selectedRose.id,
+            });
+            setShowDialog(false);
+            setRecipientName("");
+          }}
+        />
+      </Dialog.Container>
     </View>
   );
 };
