@@ -72,11 +72,14 @@ const RosaScreen = () => {
 
       const shareResult = await Sharing.shareAsync(downloadedImage.uri);
 
-      if (shareResult?.action === Sharing.sharedAction) {
+      if (
+        (shareResult && shareResult.action === Sharing.sharedAction) ||
+        shareResult.action === undefined
+      ) {
         setSelectedRose(rose);
         setShowDialog(true);
       } else {
-        console.log("User dismissed sharing or it returned null.");
+        console.log("Share was cancelled or no action returned.");
       }
     } catch (error) {
       console.log("Error sharing image:", error);
