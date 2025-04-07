@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     color: "#555",
   },
   shareButton: {
-    marginTop: 15,
+    marginTop: 5,
     padding: 10,
-    backgroundColor: "#778899",
+    backgroundColor: "#444",
     borderRadius: 5,
-    alignSelf: "flex-end",
+    alignSelf: "center",
   },
   shareButtonText: {
     color: "#fff",

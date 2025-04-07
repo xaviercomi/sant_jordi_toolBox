@@ -128,21 +128,6 @@ const LibroScreen = () => {
     }
   };
 
-  const saveInteraction = async () => {
-    try {
-      const nameToSend = recipientName.trim() || "Desconegut";
-      await sendInteraction({
-        destinatario_nombre: nameToSend,
-        tipo: "libro",
-        id: selectedBook.id,
-      });
-      setShowDialog(false);
-      setRecipientName("");
-    } catch (error) {
-      console.error("Error saving interaction:", error);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -199,12 +184,19 @@ const LibroScreen = () => {
         />
         <Dialog.Button
           label="Cancel·la"
-          onPress={() => {
+          onPress={async () => {
+            const nameToSend =
+              recipientName.trim() !== "" ? recipientName : "Desconegut";
+            await sendInteraction({
+              destinatario_nombre: nameToSend,
+              tipo: "libro",
+              id: selectedBook.id,
+            });
             setShowDialog(false);
             setRecipientName("");
           }}
         />
-        <Dialog.Button label="Desa" onPress={saveInteraction} />
+        <Dialog.Button label="Desa" onPress={sendInteraction} />
       </Dialog.Container>
     </SafeAreaView>
   );
