@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modalButtonCloseText: {
+    textAlign: "center",
     fontSize: 15,
   },
   modalContainer: {
@@ -101,6 +102,15 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: "contain",
     marginVertical: 10,
+  },
+  recipient: {
+    color: "#fff",
+  },
+  modalTitle: {
+    fontSize: 20,
+  },
+  timestamp: {
+    color: "#FFF",
   },
 });
 

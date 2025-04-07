@@ -113,7 +113,7 @@ const LibroScreen = () => {
 
       {isLoading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#FFF" />
+          <ActivityIndicator size="large" color="#444" />
         </View>
       ) : (
         <FlatList

@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   filterIcon: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     alignSelf: "flex-end",
     margin: 20,
     tintColor: "white",
@@ -35,12 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 20,
-  },
-  textDrawer: {
-    fontSize: 15,
-    color: "#fff",
-    marginBottom: 20,
-    textAlign: "center",
   },
   loadingContainer: {
     flex: 1,
@@ -105,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   inputGroup: {
-    paddingLeft: 15,
+    paddingLeft: 25,
     height: 50,
     borderRadius: 5,
     justifyContent: "center",
@@ -125,8 +119,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: "#696969",
     justifyContent: "center",
     borderWidth: 0, // Remove default border if any
     elevation: 0, // Remove Android shadow
