@@ -74,6 +74,34 @@ const styles = StyleSheet.create({
   modalButtonCloseText: {
     fontSize: 15,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalView: {
+    width: "90%",
+    maxHeight: "80%",
+    backgroundColor: "#444",
+    borderRadius: 20,
+    padding: 20,
+  },
+  scrollView: {
+    width: "100%",
+  },
+  interactionItem: {
+    marginBottom: 15,
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  thumb: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
+    marginVertical: 10,
+  },
 });
 
 export default styles;

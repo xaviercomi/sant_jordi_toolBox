@@ -70,17 +70,10 @@ const RosaScreen = () => {
         localUri
       );
 
-      const shareResult = await Sharing.shareAsync(downloadedImage.uri);
+      await Sharing.shareAsync(downloadedImage.uri);
 
-      if (
-        (shareResult && shareResult.action === Sharing.sharedAction) ||
-        shareResult.action === undefined
-      ) {
-        setSelectedRose(rose);
-        setShowDialog(true);
-      } else {
-        console.log("Share was cancelled or no action returned.");
-      }
+      setSelectedRose(rose);
+      setShowDialog(true);
     } catch (error) {
       console.log("Error sharing image:", error);
     }
@@ -153,18 +146,29 @@ const RosaScreen = () => {
         <Image source={swordBackIcon} style={styles.backIcon} />
       </TouchableOpacity>
 
-      <Dialog.Container visible={showDialog}>
-        <Dialog.Title>Vols guardar el nom del destinatari?</Dialog.Title>
-        <Dialog.Description>
-          Sabràs amb qui has compartit al teu registre personal
+      <Dialog.Container
+        visible={showDialog}
+        contentStyle={styles.dialogContainer}
+      >
+        <Dialog.Title style={styles.dialogTitle}>
+          Vols guardar el nom del destinatari?
+        </Dialog.Title>
+        <Dialog.Description style={styles.dialogDescription}>
+          Sabràs a qui has enviat una rosa a els teus lliuraments
         </Dialog.Description>
+
         <Dialog.Input
           placeholder="Nom del destinatari"
           value={recipientName}
           onChangeText={setRecipientName}
+          style={styles.dialogInput}
         />
         <Dialog.Button
           label="Cancel·la"
+          style={{
+            color: "#FF6B6B", // Rose-themed color
+            fontWeight: "bold",
+          }}
           onPress={() => {
             setShowDialog(false);
             setRecipientName("");
@@ -172,6 +176,10 @@ const RosaScreen = () => {
         />
         <Dialog.Button
           label="Desa"
+          style={{
+            color: "#555",
+            fontWeight: "bold",
+          }}
           onPress={async () => {
             const nameToSend =
               recipientName.trim() !== "" ? recipientName : "Desconegut";

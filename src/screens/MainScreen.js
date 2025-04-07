@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   TouchableHighlight,
+  ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -23,8 +24,44 @@ const MainScreen = () => {
   const [user, setUser] = useState(null);
   const [showWelcome, setShowWelcome] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [interactions, setInteractions] = useState([]);
 
   useEffect(() => {
+    const fetchUserAndInteractions = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem("user");
+        const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+
+        if (parsedUser) {
+          setUser(parsedUser);
+          setUserName(parsedUser.nombre || "");
+
+          const uuid = parsedUser.uuid;
+          console.log(uuid);
+          const response = await fetch(
+            `http://192.168.0.10:5000/api/interacciones/${uuid}`
+          );
+
+          if (!response.ok) {
+            const text = await response.text();
+            console.error("Server error:", text);
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          setInteractions(data);
+          console.log("API Response:", data); // *************** Debug ***************
+        }
+      } catch (error) {
+        console.error("Error fetching user or interactions:", error);
+      } finally {
+        setTimeout(() => {
+          setShowWelcome(false);
+        }, 1000);
+      }
+    };
+    fetchUserAndInteractions();
+
     const fetchUser = async () => {
       try {
         const storedUser = await AsyncStorage.getItem("user");
@@ -42,7 +79,6 @@ const MainScreen = () => {
         }, 1000);
       }
     };
-
     fetchUser();
 
     const init = async () => {
@@ -58,7 +94,6 @@ const MainScreen = () => {
         setShowWelcome(false);
       }
     };
-
     init();
   }, []);
 
@@ -102,22 +137,84 @@ const MainScreen = () => {
               setModalVisible(true);
             }}
           >
-            <Text style={styles.modalButtonText}>Amb qui has compartit</Text>
+            <Text style={styles.modalButtonText}>Els teus lliuraments</Text>
           </TouchableOpacity>
         </View>
       )}
 
-      <View>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
           <View style={styles.modalView}>
-            <Text> Hello! mother fucker</Text>
+            <Text style={styles.modalTitle}>Lliuraments</Text>
+
+            <ScrollView style={styles.scrollView}>
+              {interactions.length === 0 ? (
+                <Text style={styles.emptyText}>
+                  No hi ha lliuraments encara
+                </Text>
+              ) : (
+                interactions.map((item) => {
+                  const date = new Date(item.fecha_envio);
+                  const formattedDate = date.toLocaleDateString();
+                  const formattedTime = date.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+
+                  return (
+                    <View key={item.fecha_envio} style={styles.interactionItem}>
+                      {item.destinatario_nombre && (
+                        <Text style={styles.recipient}>
+                          Per: {item.destinatario_nombre}
+                        </Text>
+                      )}
+
+                      {/* Show book image if exists */}
+                      {item.libro_imagen && (
+                        <View style={styles.row}>
+                          <Image
+                            source={{
+                              uri: `http://192.168.0.10:5000/${item.libro_imagen}`,
+                            }}
+                            style={styles.thumb}
+                          />
+                          {item.libro_titulo && (
+                            <Text style={styles.title}>
+                              {item.libro_titulo}
+                            </Text>
+                          )}
+                        </View>
+                      )}
+
+                      {/* Show rose image if exists */}
+                      {item.rosa_imagen && (
+                        <Image
+                          source={{
+                            uri: `http://192.168.0.10:5000/${item.rosa_imagen}`,
+                          }}
+                          style={styles.thumb}
+                        />
+                      )}
+
+                      {/* Show quote if exists */}
+                      {item.cita_texto && (
+                        <Text style={styles.quote}>"{item.cita_texto}"</Text>
+                      )}
+
+                      <Text style={styles.timestamp}>
+                        {formattedDate} - {formattedTime}
+                      </Text>
+                    </View>
+                  );
+                })
+              )}
+            </ScrollView>
+
             <TouchableHighlight
               style={styles.modalButtonClose}
               onPress={() => {
@@ -127,9 +224,8 @@ const MainScreen = () => {
               <Text style={styles.modalButtonCloseText}>Tanca</Text>
             </TouchableHighlight>
           </View>
-        </Modal>
-      </View>
-
+        </View>
+      </Modal>
       <TouchableOpacity
         style={styles.homeButton}
         onPress={() => navigation.navigate("Home")}

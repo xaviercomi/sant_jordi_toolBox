@@ -56,6 +56,38 @@ const styles = StyleSheet.create({
   textButton: {
     color: "white",
   },
+  dialogContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    padding: 20,
+    width: width * 0.8,
+    alignSelf: "center",
+  },
+  dialogTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  dialogDescription: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  dialogInput: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+    backgroundColor: "#f9f9f9",
+  },
+  dialogButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 });
 
 export default styles;
