@@ -37,7 +37,6 @@ const MainScreen = () => {
           setUserName(parsedUser.nombre || "");
 
           const uuid = parsedUser.uuid;
-          console.log(uuid);
           const response = await fetch(
             `http://192.168.0.10:5000/api/interacciones/${uuid}`
           );
@@ -50,7 +49,6 @@ const MainScreen = () => {
 
           const data = await response.json();
           setInteractions(data);
-          console.log("API Response:", data); // *************** Debug ***************
         }
       } catch (error) {
         console.error("Error fetching user or interactions:", error);

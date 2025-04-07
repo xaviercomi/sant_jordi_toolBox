@@ -16,6 +16,10 @@ import filterIcon from "../../assets/filterIcon.png";
 import { useNavigation } from "@react-navigation/native";
 import LibroCard from "../components/LibroCard.js";
 import MultiSelect from "react-native-multiple-select";
+import { sendInteraction } from "../utils/sendInteraction";
+import Dialog from "react-native-dialog";
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
 
 const { width } = Dimensions.get("window");
 
@@ -25,6 +29,9 @@ const LibroScreen = () => {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [showDialog, setShowDialog] = useState(false);
+  const [recipientName, setRecipientName] = useState("");
 
   useEffect(() => {
     const fetchLibros = async () => {
@@ -97,6 +104,45 @@ const LibroScreen = () => {
     </Modal>
   );
 
+  const shareBook = async (book) => {
+    try {
+      if (!(await Sharing.isAvailableAsync())) {
+        alert("Sharing is not available on this device");
+        return;
+      }
+
+      const imageUrl = `http://192.168.0.10:5000/${book.portada_url}`;
+      const localUri = `${FileSystem.cacheDirectory}${book.id}-shared.jpg`;
+
+      const downloadedImage = await FileSystem.downloadAsync(
+        imageUrl,
+        localUri
+      );
+
+      await Sharing.shareAsync(downloadedImage.uri);
+
+      setSelectedBook(book);
+      setShowDialog(true);
+    } catch (error) {
+      console.log("Error sharing image:", error);
+    }
+  };
+
+  const saveInteraction = async () => {
+    try {
+      const nameToSend = recipientName.trim() || "Desconegut";
+      await sendInteraction({
+        destinatario_nombre: nameToSend,
+        tipo: "libro",
+        id: selectedBook.id,
+      });
+      setShowDialog(false);
+      setRecipientName("");
+    } catch (error) {
+      console.error("Error saving interaction:", error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -128,7 +174,7 @@ const LibroScreen = () => {
           contentContainerStyle={{ paddingHorizontal: width * 0.05 }}
           renderItem={({ item }) => (
             <View style={{ width: width * 0.9, alignItems: "center" }}>
-              <LibroCard libro={item} />
+              <LibroCard libro={item} onShare={() => shareBook(item)} />
             </View>
           )}
         />
@@ -140,6 +186,26 @@ const LibroScreen = () => {
       >
         <Image source={swordBackIcon} style={styles.backIcon} />
       </TouchableOpacity>
+
+      <Dialog.Container visible={showDialog}>
+        <Dialog.Title>Vols guardar el nom del destinatari?</Dialog.Title>
+        <Dialog.Description>
+          Sabràs a qui has recomanat aquest llibre
+        </Dialog.Description>
+        <Dialog.Input
+          placeholder="Nom del destinatari"
+          value={recipientName}
+          onChangeText={setRecipientName}
+        />
+        <Dialog.Button
+          label="Cancel·la"
+          onPress={() => {
+            setShowDialog(false);
+            setRecipientName("");
+          }}
+        />
+        <Dialog.Button label="Desa" onPress={saveInteraction} />
+      </Dialog.Container>
     </SafeAreaView>
   );
 };

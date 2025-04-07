@@ -12,7 +12,6 @@ import swordBackIcon from "../../assets/backIcon.png";
 import { useNavigation } from "@react-navigation/native";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
-
 import { sendInteraction } from "../utils/sendInteraction.js";
 import Dialog from "react-native-dialog";
 
@@ -166,7 +165,7 @@ const RosaScreen = () => {
         <Dialog.Button
           label="Cancel·la"
           style={{
-            color: "#FF6B6B", // Rose-themed color
+            color: "#FF6B6B",
             fontWeight: "bold",
           }}
           onPress={() => {

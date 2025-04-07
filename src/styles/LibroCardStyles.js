@@ -45,6 +45,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  dialogContainer: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+  },
+  dialogTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  dialogDescription: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 15,
+  },
+  dialogInput: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+  },
 });
 
 export default styles;
