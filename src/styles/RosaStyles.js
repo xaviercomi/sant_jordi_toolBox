@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "#292929",
-    paddingTop: 90,
+    paddingTop: 60,
   },
   text: {
     color: "#fff",
@@ -21,17 +21,15 @@ const styles = StyleSheet.create({
   },
   rosesContainer: {
     width,
-    justifyContent: "center",
     alignItems: "center",
-    marginTop: 5,
   },
   roseImage: {
     borderWidth: 1,
     borderColor: "#fff",
-    width: width * 0.9,
-    height: height * 0.6,
+    width: width * 0.8,
+    height: height * 0.5,
     borderRadius: 10,
-    margin: 15,
+    resizeMode: "cover",
   },
   colorMenu: {
     flex: 1,

@@ -63,10 +63,7 @@ const RosaScreen = () => {
         alert("Sharing is not available on this device");
         return;
       }
-
-      const imageUrl = `${API_URL}${
-        rose.imagen_url.startsWith("/") ? "" : "/"
-      }${rose.imagen_url}`;
+      const imageUrl = `${API_URL}/${rose.imagen_url}`;
       const localUri = `${FileSystem.cacheDirectory}${rose.id}-shared.jpg`;
 
       const downloadedImage = await FileSystem.downloadAsync(
@@ -130,10 +127,8 @@ const RosaScreen = () => {
       <FlatList
         data={filteredRoses}
         horizontal
-        showsHorizontalScrollIndicator={false}
         pagingEnabled
-        snapToAlignment="center"
-        snapToInterval={width * 0.9 + 30}
+        showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
@@ -143,14 +138,10 @@ const RosaScreen = () => {
           >
             <Image
               source={{
-                uri: `${
-                  Constants.expoConfig?.extra?.API_URL ||
-                  "https://sant-jordi-toolbox-backend.onrender.com"
-                }${item.imagen_url}`,
-                cache: `force-cache`,
+                uri: `${API_URL}/${item.imagen_url}`,
+                cache: "force-cache",
               }}
               style={styles.roseImage}
-              resizeMode="contain"
             />
           </TouchableOpacity>
         )}

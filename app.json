@@ -24,7 +24,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "API_URL": "https://sant-jordi-toolbox-backend.onrender.com",
+      "API_URL": "https://sant-jordi-toolbox-backend.onrender.com"
     }
   }
 }
