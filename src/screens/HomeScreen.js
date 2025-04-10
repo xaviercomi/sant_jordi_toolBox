@@ -5,6 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import portada from "../../assets/portada.png";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import Constants from "expo-constants";
+
+const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 const HomeScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -39,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
         await AsyncStorage.setItem("uuid", uuid);
       }
 
-      const response = await fetch("http://192.168.0.10:5000/api/usuarios", {
+      const response = await fetch(`${API_URL}/api/usuarios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uuid, nombre: name }),

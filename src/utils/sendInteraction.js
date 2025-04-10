@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import Constants from "expo-constants";
 
-const API_URL = "http://192.168.0.10:5000/api/interacciones";
+const API_URL = `${Constants.expoConfig?.extra?.API_URL}/api/interacciones`;
 
 export const sendInteraction = async ({ destinatario_nombre, tipo, id }) => {
   try {

@@ -20,6 +20,9 @@ import { sendInteraction } from "../utils/sendInteraction";
 import Dialog from "react-native-dialog";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
+import Constants from "expo-constants";
+
+const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 const { width } = Dimensions.get("window");
 
@@ -37,7 +40,7 @@ const LibroScreen = () => {
     const fetchLibros = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("http://192.168.0.10:5000/api/libros");
+        const response = await fetch(`${API_URL}/api/libros`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -111,7 +114,9 @@ const LibroScreen = () => {
         return;
       }
 
-      const imageUrl = `http://192.168.0.10:5000/${book.portada_url}`;
+      const imageUrl = `${API_URL}${
+        book.portada_url.startsWith("/") ? "" : "/"
+      }${book.portada_url}`;
       const localUri = `${FileSystem.cacheDirectory}${book.id}-shared.jpg`;
 
       const downloadedImage = await FileSystem.downloadAsync(
@@ -172,31 +177,55 @@ const LibroScreen = () => {
         <Image source={swordBackIcon} style={styles.backIcon} />
       </TouchableOpacity>
 
-      <Dialog.Container visible={showDialog}>
-        <Dialog.Title>Vols guardar el nom del destinatari?</Dialog.Title>
-        <Dialog.Description>
+      <Dialog.Container
+        visible={showDialog}
+        contentStyle={styles.dialogContainer}
+      >
+        <Dialog.Title style={styles.dialogTitle}>
+          Vols guardar el nom del destinatari?
+        </Dialog.Title>
+        <Dialog.Description style={styles.dialogDescription}>
           Sabràs a qui has recomanat aquest llibre
         </Dialog.Description>
         <Dialog.Input
           placeholder="Nom del destinatari"
           value={recipientName}
           onChangeText={setRecipientName}
+          style={styles.dialogInput}
         />
         <Dialog.Button
           label="Cancel·la"
-          onPress={async () => {
-            const nameToSend =
-              recipientName.trim() !== "" ? recipientName : "Desconegut";
-            await sendInteraction({
-              destinatario_nombre: nameToSend,
-              tipo: "libro",
-              id: selectedBook.id,
-            });
+          style={{
+            color: "#FF6B6B",
+            fontWeight: "bold",
+          }}
+          onPress={() => {
             setShowDialog(false);
             setRecipientName("");
           }}
         />
-        <Dialog.Button label="Desa" onPress={sendInteraction} />
+        <Dialog.Button
+          label="Desa"
+          style={{
+            color: "#555",
+            fontWeight: "bold",
+          }}
+          onPress={async () => {
+            const nameToSend =
+              recipientName.trim() !== "" ? recipientName : "Desconegut";
+            try {
+              await sendInteraction({
+                destinatario_nombre: nameToSend,
+                tipo: "libro",
+                id: selectedBook.id,
+              });
+              setShowDialog(false);
+              setRecipientName("");
+            } catch (error) {
+              console.error("Error saving interection:", error);
+            }
+          }}
+        />
       </Dialog.Container>
     </SafeAreaView>
   );

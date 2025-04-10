@@ -14,6 +14,9 @@ import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 import { sendInteraction } from "../utils/sendInteraction.js";
 import Dialog from "react-native-dialog";
+import Constants from "expo-constants";
+
+const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 const { width } = Dimensions.get("window");
 
@@ -28,7 +31,7 @@ const RosaScreen = () => {
   useEffect(() => {
     const fetchRoses = async () => {
       try {
-        const response = await fetch("http://192.168.0.10:5000/api/rosas");
+        const response = await fetch(`${API_URL}/api/rosas`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -61,7 +64,9 @@ const RosaScreen = () => {
         return;
       }
 
-      const imageUrl = `http://192.168.0.10:5000/${rose.imagen_url}`;
+      const imageUrl = `${API_URL}${
+        rose.imagen_url.startsWith("/") ? "" : "/"
+      }${rose.imagen_url}`;
       const localUri = `${FileSystem.cacheDirectory}${rose.id}-shared.jpg`;
 
       const downloadedImage = await FileSystem.downloadAsync(
@@ -132,10 +137,20 @@ const RosaScreen = () => {
         decelerationRate="fast"
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => shareRose(item)}>
+          <TouchableOpacity
+            onPress={() => shareRose(item)}
+            style={styles.rosesContainer}
+          >
             <Image
-              source={{ uri: `http://192.168.0.10:5000/${item.imagen_url}` }}
+              source={{
+                uri: `${
+                  Constants.expoConfig?.extra?.API_URL ||
+                  "https://sant-jordi-toolbox-backend.onrender.com"
+                }${item.imagen_url}`,
+                cache: `force-cache`,
+              }}
               style={styles.roseImage}
+              resizeMode="contain"
             />
           </TouchableOpacity>
         )}

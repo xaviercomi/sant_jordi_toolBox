@@ -17,6 +17,9 @@ import rosaIcon from "../../assets/rosaIco.png";
 import mapaIcon from "../../assets/mapaIco.png";
 import libroIcon from "../../assets/libroIco.png";
 import homeIcon from "../../assets/homeIcon.png";
+import Constants from "expo-constants";
+
+const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 const MainScreen = () => {
   const navigation = useNavigation();
@@ -37,9 +40,7 @@ const MainScreen = () => {
           setUserName(parsedUser.nombre || "");
 
           const uuid = parsedUser.uuid;
-          const response = await fetch(
-            `http://192.168.0.10:5000/api/interacciones/${uuid}`
-          );
+          const response = await fetch(`${API_URL}/api/interacciones/${uuid}`);
 
           if (!response.ok) {
             const text = await response.text();
@@ -177,7 +178,7 @@ const MainScreen = () => {
                         <View style={styles.row}>
                           <Image
                             source={{
-                              uri: `http://192.168.0.10:5000/${item.libro_imagen}`,
+                              uri: `${API_URL}${item.libro_imagen}`,
                             }}
                             style={styles.thumb}
                           />
@@ -193,7 +194,7 @@ const MainScreen = () => {
                       {item.rosa_imagen && (
                         <Image
                           source={{
-                            uri: `http://192.168.0.10:5000/${item.rosa_imagen}`,
+                            uri: `${API_URL}${item.rosa_imagen}`,
                           }}
                           style={styles.thumb}
                         />

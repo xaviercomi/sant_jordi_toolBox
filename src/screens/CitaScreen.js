@@ -12,6 +12,9 @@ import swordBackIcon from "../../assets/backIcon.png";
 import { useNavigation } from "@react-navigation/native";
 import { Share } from "react-native";
 import QuoteCard from "../components/QuoteCard.js";
+import Constants from "expo-constants";
+
+const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 const { width } = Dimensions.get("window");
 
@@ -22,7 +25,7 @@ const CitaScreen = () => {
   useEffect(() => {
     const fetchCitas = async () => {
       try {
-        const response = await fetch("http://192.168.0.10:5000/api/citas");
+        const response = await fetch(`${API_URL}/api/citas`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
