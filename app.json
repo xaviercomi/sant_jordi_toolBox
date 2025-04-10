@@ -8,9 +8,7 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizemode": "",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/splash-icon.png"
     },
     "ios": {
       "supportsTablet": true
@@ -27,9 +25,6 @@
     },
     "extra": {
       "API_URL": "https://sant-jordi-toolbox-backend.onrender.com",
-    },
-    "eas": {
-        "projectId": "b3469c41-7fec-46f2-9954-201aa6c0677c"
     }
   }
 }
