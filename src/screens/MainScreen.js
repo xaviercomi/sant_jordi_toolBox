@@ -99,7 +99,7 @@ const MainScreen = () => {
   return (
     <View style={styles.container}>
       {showWelcome && userName !== "" ? (
-        <Text style={styles.text}>Hola, {userName}!</Text>
+        <Text style={styles.text}>Hola,`${userName}`!</Text>
       ) : (
         <View style={styles.grid}>
           <TouchableOpacity onPress={() => navigation.navigate("Cita")}>

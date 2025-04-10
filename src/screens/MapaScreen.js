@@ -12,7 +12,7 @@ const MapaScreen = () => {
         const query = `
           [out:json];
           (
-            node(around:10000, 41.3851, 2.1734)["shop"="books"];
+            node(around:100000, 41.3851, 2.1734)["shop"="books"];
           );
           out center;
         `;

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 8,
     textAlign: "center",
-    color: "gray",
+    color: "#ffffff",
   },
   author: {
     fontSize: 15,

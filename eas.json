@@ -15,6 +15,9 @@
       "autoIncrement": true,
       "env": {
         "API_URL": "https://sant-jordi-toolbox-backend.onrender.com"
+      },
+      "android": {
+        "buildType": "apk"
       }
     }
   },

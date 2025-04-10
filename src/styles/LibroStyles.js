@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     width: 90,
-    height: 90,
+    height: 40,
+    marginBottom: 5,
     alignSelf: "center",
   },
   filterIcon: {
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     backgroundColor: "#f9f9f9",
+    fontColor: "black",
   },
   dialogButtonContainer: {
     flexDirection: "row",

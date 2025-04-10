@@ -3,11 +3,7 @@ import styles from "../styles/LibroCardStyles";
 import Constants from "expo-constants";
 
 const LibroCard = ({ libro, onShare }) => {
-  const imageUrl = libro?.portada_url
-    ? `${Constants.expoConfig?.extra?.API_URL || ""}${
-        libro.portada_url.startsWith("/") ? "" : "/"
-      }${libro.portada_url}`
-    : null;
+  const imageUrl = `${Constants.expoConfig.extra.API_URL}/${libro.portada_url}`;
 
   return (
     <View style={{ alignItems: "center", marginBottom: 20 }}>

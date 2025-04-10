@@ -63,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Sant Jordi</Text>
-        <Text style={styles.subtitle}>toolBox</Text>
+        <Text style={styles.subtitle}>toolbox</Text>
       </View>
 
       <Image source={portada} style={styles.image} />

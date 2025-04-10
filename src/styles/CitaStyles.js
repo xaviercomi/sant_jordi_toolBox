@@ -8,18 +8,20 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#292929",
-    paddingTop: 90,
-    paddingBottom: 20,
+    paddingTop: 60,
+    paddingBottom: 10,
   },
   text: {
     color: "#fff",
     fontSize: 20,
+    marginBottom: 40,
   },
   backIcon: {
     width: 90,
-    height: 90,
+    height: 50,
     borderRadius: 10,
     backgroudColor: "#fff",
+    marginTop: 40,
   },
   citaCard: {
     width: width * 0.9,

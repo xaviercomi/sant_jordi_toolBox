@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     backgroundColor: "#f9f9f9",
+    fontColor: "black",
   },
   dialogButtonContainer: {
     flexDirection: "row",
