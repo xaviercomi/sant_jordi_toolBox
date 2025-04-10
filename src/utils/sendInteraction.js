@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Constants from "expo-constants";
 
-const API_URL = `${Constants.expoConfig?.extra?.API_URL}/api/interacciones`;
+const API_URL = `${Constants.expoConfig.extra.API_URL}/api/interacciones`;
 
 export const sendInteraction = async ({ destinatario_nombre, tipo, id }) => {
   try {
@@ -24,7 +24,6 @@ export const sendInteraction = async ({ destinatario_nombre, tipo, id }) => {
     };
 
     const response = await axios.post(API_URL, payload);
-    console.log("Interacción enviada:", response.data);
     return response.data;
   } catch (err) {
     console.error("Error al guardar interacción: ", err.message);

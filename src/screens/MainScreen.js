@@ -150,7 +150,6 @@ const MainScreen = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Lliuraments</Text>
-
             <ScrollView style={styles.scrollView}>
               {interactions.length === 0 ? (
                 <Text style={styles.emptyText}>
@@ -164,7 +163,6 @@ const MainScreen = () => {
                     hour: "2-digit",
                     minute: "2-digit",
                   });
-
                   return (
                     <View key={item.fecha_envio} style={styles.interactionItem}>
                       {item.destinatario_nombre && (
@@ -172,13 +170,12 @@ const MainScreen = () => {
                           Per: {item.destinatario_nombre}
                         </Text>
                       )}
-
                       {/* Show book image if exists */}
                       {item.libro_imagen && (
                         <View style={styles.row}>
                           <Image
                             source={{
-                              uri: `${API_URL}${item.libro_imagen}`,
+                              uri: `${API_URL}/${item.libro_imagen}`,
                             }}
                             style={styles.thumb}
                           />
@@ -189,20 +186,18 @@ const MainScreen = () => {
                           )}
                         </View>
                       )}
-
                       {/* Show rose image if exists */}
                       {item.rosa_imagen && (
                         <Image
                           source={{
-                            uri: `${API_URL}${item.rosa_imagen}`,
+                            uri: `${API_URL}/${item.rosa_imagen}`,
                           }}
                           style={styles.thumb}
                         />
                       )}
-
                       {/* Show quote if exists */}
                       {item.cita_texto && (
-                        <Text style={styles.quote}>"{item.cita_texto}"</Text>
+                        <Text style={styles.quote}>"{item.cita}"</Text>
                       )}
 
                       <Text style={styles.timestamp}>

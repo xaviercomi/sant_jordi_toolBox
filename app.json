@@ -1,14 +1,16 @@
 {
   "expo": {
     "name": "Sant Jordi toolbox",
-    "slug": "Sant jordi toolbox",
+    "slug": "sant-jordi-toolbox",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png"
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true
@@ -24,7 +26,10 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "API_URL": "https://sant-jordi-toolbox-backend.onrender.com"
+      "API_URL": "https://sant-jordi-toolbox-backend.onrender.com",
+      "eas": {
+        "projectId": "7228a073-eb5c-4550-b0c3-5918b829393d"
+      }
     }
   }
 }
