@@ -26,6 +26,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
+      "GOOGLE_MAPS_API_KEY": "REMOVED_API_KEY",
       "API_URL": "https://sant-jordi-toolbox-backend.onrender.com",
       "eas": {
         "projectId": "7228a073-eb5c-4550-b0c3-5918b829393d"

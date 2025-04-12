@@ -1,48 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { View, ActivityIndicator, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import styles from "../styles/MapaStyles.js";
+import axios from "axios";
+import Constants from "expo-constants";
+import styles from "../styles/MapaStyles";
+
+const GOOGLE_API_KEY = Constants.expoConfig.extra.GOOGLE_MAPS_API_KEY;
 
 const MapaScreen = () => {
   const [bookstores, setBookstores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const location = {
+    lat: 41.3851,
+    lng: 2.1734,
+  };
+
   useEffect(() => {
     const fetchBookstores = async () => {
       try {
-        const query = `
-          [out:json][timeout:25];
-          (
-            node(around:6000, 41.3851, 2.1734)["shop"="books"];
-          );
-          out center 100;
-        `;
-        const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
-          query
-        )}`;
+        const response = await axios.get(
+          `https://maps.googleapis.com/maps/api/place/nearbysearch/json`,
+          {
+            params: {
+              location: `${location.lat},${location.lng}`,
+              radius: 6000,
+              keyword: "bookstore",
+              key: GOOGLE_API_KEY,
+            },
+          }
+        );
 
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!data.elements || data.elements.length === 0) {
+        if (response.data.results.length === 0) {
           console.warn("No bookstores found.");
-          setLoading(false);
           return;
         }
 
-        const bookstoresData = data.elements
-          .filter((e) => e.lat && e.lon)
-          .map((e) => ({
-            id: e.id,
-            name: e.tags?.name || "Llibreria sense nom",
-            latitude: e.lat,
-            longitude: e.lon,
-          }));
+        const parsed = response.data.results.map((place) => ({
+          id: place.place_id,
+          name: place.name,
+          latitude: place.geometry.location.lat,
+          longitude: place.geometry.location.lng,
+        }));
 
-        setBookstores(bookstoresData.slice(0, 100)); // limit to 100
+        setBookstores(parsed);
       } catch (err) {
-        console.error("Error fetching bookstores:", err);
+        console.error("Error fetching Google Places:", err);
         setError(true);
       } finally {
         setLoading(false);
@@ -54,9 +58,9 @@ const MapaScreen = () => {
 
   if (loading) {
     return (
-      <View style={[styles.containerLoader, styles.indicator]}>
+      <View style={[styles.containerLoader, styles.loading]}>
         <ActivityIndicator style={styles.indicator} />
-        <Text style={styles.textIndicator}>Carregant...</Text>
+        <Text style={styles.textIndicator}>Carregant llibreries...</Text>
       </View>
     );
   }
@@ -64,9 +68,7 @@ const MapaScreen = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <Text style={{ color: "red" }}>
-          No s'han pogut carregar les llibreries.
-        </Text>
+        <Text style={{ color: "red" }}>Error carregant dades.</Text>
       </View>
     );
   }
@@ -76,8 +78,8 @@ const MapaScreen = () => {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 41.3851,
-          longitude: 2.1734,
+          latitude: location.lat,
+          longitude: location.lng,
           latitudeDelta: 0.1,
           longitudeDelta: 0.1,
         }}

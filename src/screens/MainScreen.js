@@ -95,7 +95,6 @@ const MainScreen = () => {
     };
     init();
   }, []);
-
   return (
     <View style={styles.container}>
       {showWelcome && userName !== "" ? (

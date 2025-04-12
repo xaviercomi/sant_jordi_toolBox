@@ -13,14 +13,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  loading: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   indicator: {
     size: "large",
-    color: "white",
+    color: "#fff",
   },
   textIndicator: {
     marginTop: 20,
     size: 20,
-    color: "white",
+    color: "#fff",
   },
 });
 
