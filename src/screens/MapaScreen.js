@@ -12,7 +12,7 @@ const MapaScreen = () => {
         const query = `
           [out:json];
           (
-            node(around:100000, 41.3851, 2.1734)["shop"="books"];
+            node(around:6000, 41.3851, 2.1734)["shop"="books"];
           );
           out center;
         `;
@@ -29,12 +29,14 @@ const MapaScreen = () => {
         }
 
         // Extract bookstore locations
-        const bookstoresData = data.elements.map((element) => ({
-          id: element.id,
-          name: element.tags?.name || "Unnamed Bookstore",
-          latitude: element.lat,
-          longitude: element.lon,
-        }));
+        const bookstoresData = data.elements
+          .filter((element) => element.lat && element.lon)
+          .map((element) => ({
+            id: element.id,
+            name: element.tags?.name || "Unnamed Bookstore",
+            latitude: element.lat,
+            longitude: element.lon,
+          }));
 
         setBookstores(bookstoresData);
       } catch (error) {
@@ -47,26 +49,28 @@ const MapaScreen = () => {
 
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 41.3851,
-          longitude: 2.1734,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-      >
-        {bookstores.map((store) => (
-          <Marker
-            key={store.id}
-            coordinate={{
-              latitude: store.latitude,
-              longitude: store.longitude,
-            }}
-            title={store.name}
-          />
-        ))}
-      </MapView>
+      {bookstores.length > 0 && (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 41.3851,
+            longitude: 2.1734,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1,
+          }}
+        >
+          {bookstores.map((store) => (
+            <Marker
+              key={store.id}
+              coordinate={{
+                latitude: store.latitude,
+                longitude: store.longitude,
+              }}
+              title={store.name}
+            />
+          ))}
+        </MapView>
+      )}
     </View>
   );
 };

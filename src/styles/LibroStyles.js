@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 5,
     padding: 20,
-    width: width * 0.8,
+    width: width * 0.9,
     alignSelf: "center",
   },
   dialogTitle: {
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     backgroundColor: "#f9f9f9",
-    fontColor: "black",
+    color: "black",
   },
   dialogButtonContainer: {
     flexDirection: "row",

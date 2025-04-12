@@ -49,7 +49,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "80%",
   },
-  buttonText: { color: "#fff", fontSize: 20 },
+  buttonText: {
+    color: "#fff",
+    fontSize: 20,
+  },
+  loading: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  indicator: {
+    size: "large",
+    color: "#fff",
+  },
+  textIndicator: {
+    marginTop: 20,
+    size: 20,
+    color: "#fff",
+  },
 });
 
 export default styles;

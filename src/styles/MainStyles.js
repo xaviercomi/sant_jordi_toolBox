@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: "85%",
-    maxHeight: "70%",
-    minHeight: "60%",
+    maxHeight: "75%",
+    minHeight: "75%",
     backgroundColor: "#444",
     borderRadius: 20,
     padding: 20,
@@ -112,6 +112,10 @@ const styles = StyleSheet.create({
   },
   timestamp: {
     color: "#FFF",
+  },
+  title: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
 

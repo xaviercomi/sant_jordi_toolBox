@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image, TouchableOpacity, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
 import styles from "../styles/HomeStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import portada from "../../assets/portada.png";
@@ -12,6 +19,8 @@ const API_URL = Constants.expoConfig?.extra?.API_URL;
 const HomeScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [uuidExists, setUuidExists] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   // En el cas de que l'usuari estigui registrat
   useEffect(() => {
@@ -22,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
         setName(user.nombre || "");
         setUuidExists(true);
       }
+      setLoading(false);
     };
     checkStoredUser();
   }, []);
@@ -29,11 +39,14 @@ const HomeScreen = ({ navigation }) => {
   const handleEnter = async () => {
     if (uuidExists) {
       navigation.navigate("Main");
+      return;
     }
     if (name.trim() === "") {
       alert("Si us plau entreu el vostre nom");
       return;
     }
+
+    setSubmitting(true);
 
     try {
       let uuid = await AsyncStorage.getItem("uuid");
@@ -56,8 +69,19 @@ const HomeScreen = ({ navigation }) => {
     } catch (error) {
       console.error("Error registering user:", error);
       alert("Error connectant amb el servidor.");
+    } finally {
+      setSubmitting(false);
     }
   };
+
+  if (loading || submitting) {
+    return (
+      <View style={[styles.container, styles.loading]}>
+        <ActivityIndicator style={styles.indicator} />
+        <Text style={styles.textIndicator}>Carregant...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
