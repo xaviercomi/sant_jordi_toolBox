@@ -5,7 +5,7 @@ import axios from "axios";
 import Constants from "expo-constants";
 import styles from "../styles/MapaStyles";
 
-const GOOGLE_API_KEY = Constants.expoConfig.extra.GOOGLE_MAPS_API_KEY;
+const GOOGLE_API_KEY = Constants.expoConfig?.extra?.GOOGLE_MAPS_API_KEY ?? "";
 
 const MapaScreen = () => {
   const [bookstores, setBookstores] = useState([]);
