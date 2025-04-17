@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, ActivityIndicator, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
-import Constants from "expo-constants";
 import styles from "../styles/MapaStyles";
-
-const GOOGLE_API_KEY = Constants.expoConfig?.extra?.GOOGLE_MAPS_API_KEY ?? "";
 
 const MapaScreen = () => {
   const [bookstores, setBookstores] = useState([]);
@@ -21,32 +18,18 @@ const MapaScreen = () => {
     const fetchBookstores = async () => {
       try {
         const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/place/nearbysearch/json`,
+          "https://sant-jordi-toolbox-backend.onrender.com/api/librerias",
           {
             params: {
-              location: `${location.lat},${location.lng}`,
-              radius: 6000,
-              keyword: "bookstore",
-              key: GOOGLE_API_KEY,
+              lat: location.lat,
+              lng: location.lng,
             },
           }
         );
 
-        if (response.data.results.length === 0) {
-          console.warn("No bookstores found.");
-          return;
-        }
-
-        const parsed = response.data.results.map((place) => ({
-          id: place.place_id,
-          name: place.name,
-          latitude: place.geometry.location.lat,
-          longitude: place.geometry.location.lng,
-        }));
-
-        setBookstores(parsed);
+        setBookstores(response.data);
       } catch (err) {
-        console.error("Error fetching Google Places:", err);
+        console.error("Error obtenint llibreries:", err);
         setError(true);
       } finally {
         setLoading(false);
