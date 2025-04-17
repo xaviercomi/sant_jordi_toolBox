@@ -23,6 +23,11 @@ export default {
         backgroundColor: "#ffffff",
       },
       package: "com.xaviercomi.SantJordiToolbox",
+      config: {
+        googleMaps: {
+          apiKey: process.env.GOOGLE_MAPS_API_KEY,
+        },
+      },
     },
     web: {
       favicon: "./assets/favicon.png",
