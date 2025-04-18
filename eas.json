@@ -14,7 +14,8 @@
     "production": {
       "autoIncrement": true,
       "env": {
-        "API_URL": "https://sant-jordi-toolbox-backend.onrender.com"
+        "API_URL": "https://sant-jordi-toolbox-backend.onrender.com",
+        "GOOGLE_MAPS_API_KEY": "GOOGLE_MAPS_API_KEY"
       },
       "android": {
         "buildType": "apk"
