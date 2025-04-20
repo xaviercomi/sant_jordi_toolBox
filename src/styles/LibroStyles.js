@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   backIcon: {
-    width: 90,
-    height: 40,
+    width: 80,
+    height: 25,
     marginBottom: 5,
     alignSelf: "center",
   },
