@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, ActivityIndicator, Text } from "react-native";
+import { View, ActivityIndicator, Text, TouchableOpacity, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 import styles from "../styles/MapaStyles";
+import { useNavigation } from "@react-navigation/native";
+import swordBackIcon from "../../assets/backIcon.png";
 
 const MapaScreen = () => {
   const [bookstores, setBookstores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const navigation = useNavigation();
 
   const location = {
     lat: 41.3851,
@@ -76,8 +79,13 @@ const MapaScreen = () => {
             }}
             title={store.name}
           />
-        ))}
-      </MapView>
+        ))} 
+      </MapView>  
+      <View style={styles.backButtonContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <Image source={swordBackIcon} style={styles.backIcon} />
+        </TouchableOpacity>
+      </View>   
     </View>
   );
 };
