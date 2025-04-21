@@ -22,7 +22,7 @@
       },
       "ios": {
         "distribution": "internal",
-        "simulatot": true
+        "simulator": true
       }
     }
   },
