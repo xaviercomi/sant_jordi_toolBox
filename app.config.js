@@ -16,6 +16,8 @@ export default {
     },
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "com.xaviercomi.SantJordiToolbox",
+      buildNumber: "1.0.0"
     },
     android: {
       adaptiveIcon: {
