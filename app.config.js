@@ -19,7 +19,7 @@ export default {
       bundleIdentifier: "com.xaviercomi.SantJordiToolbox",
       buildNumber: "1.0.0",
       infoPlist: {
-        ITSAppUsesNonExempEncryption: false
+        ITSAppUsesNonExemptEncryption: false
       }
     },
     android: {
