@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -13,8 +13,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cover: {
-    width: "100%",
-    height: 350,
+    width: Platform.select ({
+      android: "100%",
+      ios: "70%",  
+    }),
+    height: Platform.select ({
+      android: 350,
+      ios: "80%",
+    }),  
     resizeMode: "contain",
   },
   title: {

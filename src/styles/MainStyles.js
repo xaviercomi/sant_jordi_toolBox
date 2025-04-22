@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   grid: {
     flex: 1,
     flexDirection: "row",
-    gap: 50,
+    gap: 35,
     padding: 20,
     justifyContent: "center",
     flexWrap: "wrap",
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     height: 150,
-    width: 150,
+    width: 140,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
