@@ -14,6 +14,11 @@ export default {
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
+    androidNavigationBar: {
+      visible: "immersive",
+      backgroundColor: "#292929",
+      barStyle: "light-content",
+    },
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.xaviercomi.SantJordiToolbox",

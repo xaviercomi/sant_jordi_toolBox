@@ -53,6 +53,7 @@ const CitaScreen = () => {
       <Text style={styles.text}>Comparteix una cita</Text>
 
       <FlatList
+        style={styles.flatList}
         data={citas}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}

@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, ActivityIndicator, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 import styles from "../styles/MapaStyles";
@@ -79,13 +85,8 @@ const MapaScreen = () => {
             }}
             title={store.name}
           />
-        ))} 
-      </MapView>  
-      <View style={styles.backButtonContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <Image source={swordBackIcon} style={styles.backIcon} />
-        </TouchableOpacity>
-      </View>   
+        ))}
+      </MapView>
     </View>
   );
 };

@@ -82,48 +82,9 @@ const RosaScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Tria una rosa</Text>
-
-      <View style={styles.colorMenu}>
-        <TouchableOpacity
-          style={[
-            styles.colorButton,
-            { backgroundColor: "red", opacity: selectedColor === "roja" },
-          ]}
-          onPress={() => filterByColor("roja")}
-        />
-        <TouchableOpacity
-          style={[
-            styles.colorButton,
-            { backgroundColor: "pink", opacity: selectedColor === "rosa" },
-          ]}
-          onPress={() => filterByColor("rosa")}
-        />
-        <TouchableOpacity
-          style={[
-            styles.colorButton,
-            { backgroundColor: "white", opacity: selectedColor === "blanca" },
-          ]}
-          onPress={() => filterByColor("blanca")}
-        />
-        <TouchableOpacity
-          style={[
-            styles.colorButton,
-            {
-              backgroundColor: "yellow",
-              opacity: selectedColor === "amarilla",
-            },
-          ]}
-          onPress={() => filterByColor("amarilla")}
-        />
-        <TouchableOpacity
-          style={[styles.colorButton, { backgroundColor: "black" }]}
-          onPress={() => filterByColor("all")}
-        >
-          <Text style={styles.textButton}>All</Text>
-        </TouchableOpacity>
+      <View style={styles.header}>
+        <Text style={styles.text}>Tria una rosa</Text>
       </View>
-
       <FlatList
         data={filteredRoses}
         horizontal
@@ -146,10 +107,6 @@ const RosaScreen = () => {
           </TouchableOpacity>
         )}
       />
-
-      <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-        <Image source={swordBackIcon} style={styles.backIcon} />
-      </TouchableOpacity>
 
       <Dialog.Container
         visible={showDialog}
@@ -198,6 +155,48 @@ const RosaScreen = () => {
           }}
         />
       </Dialog.Container>
+      <View style={styles.colorMenu}>
+        <TouchableOpacity
+          style={[
+            styles.colorButton,
+            { backgroundColor: "red", opacity: selectedColor === "roja" },
+          ]}
+          onPress={() => filterByColor("roja")}
+        />
+        <TouchableOpacity
+          style={[
+            styles.colorButton,
+            { backgroundColor: "pink", opacity: selectedColor === "rosa" },
+          ]}
+          onPress={() => filterByColor("rosa")}
+        />
+        <TouchableOpacity
+          style={[
+            styles.colorButton,
+            { backgroundColor: "white", opacity: selectedColor === "blanca" },
+          ]}
+          onPress={() => filterByColor("blanca")}
+        />
+        <TouchableOpacity
+          style={[
+            styles.colorButton,
+            {
+              backgroundColor: "yellow",
+              opacity: selectedColor === "amarilla",
+            },
+          ]}
+          onPress={() => filterByColor("amarilla")}
+        />
+        <TouchableOpacity
+          style={[styles.colorButton, { backgroundColor: "#333" }]}
+          onPress={() => filterByColor("all")}
+        >
+          <Text style={styles.textButton}>Tots colors</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+        <Image source={swordBackIcon} style={styles.backIcon} />
+      </TouchableOpacity>
     </View>
   );
 };

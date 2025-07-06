@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#292929",
     paddingTop: 60,
-    paddingBottom: 10,
+    paddingBottom: 70,
   },
   text: {
     color: "#fff",
@@ -17,11 +17,10 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   backIcon: {
-    width: 90,
-    height: 50,
-    borderRadius: 10,
-    backgroudColor: "#fff",
-    marginTop: 40,
+    width: 60,
+    height: 40,
+    tintColor: "#fff",
+    marginTop: 15,
   },
   citaCard: {
     width: width * 0.9,
@@ -61,6 +60,14 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  flatList: {
+    borderTopWidth: 3,
+    borderWidth: 1,
+    borderRightWidth: 3,
+    borderColor: "#4d5656",
+    borderRadius: 10,
+    backgroundColor: "#1c2833",
   },
 });
 

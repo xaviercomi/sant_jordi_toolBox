@@ -128,7 +128,6 @@ const MainScreen = () => {
               <Text style={styles.textIcon}>Llibreries</Text>
             </View>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.modalButton}
             onPress={() => {
@@ -139,6 +138,12 @@ const MainScreen = () => {
           </TouchableOpacity>
         </View>
       )}
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={() => navigation.navigate("Home")}
+      >
+        <Image source={homeIcon} style={styles.homeIcon} />
+      </TouchableOpacity>
 
       <Modal
         animationType="fade"
@@ -219,12 +224,6 @@ const MainScreen = () => {
           </View>
         </View>
       </Modal>
-      <TouchableOpacity
-        style={styles.homeButton}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Image source={homeIcon} style={styles.homeIcon} />
-      </TouchableOpacity>
     </View>
   );
 };

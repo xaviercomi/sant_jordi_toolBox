@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 70,
     paddingBottom: 50,
@@ -20,9 +19,8 @@ const styles = StyleSheet.create({
   image: {
     height: 290,
     width: 290,
-    paddingTop: 15,
-    borderRadius: 10,
     borderWidth: 1,
+    borderRadius: 10,
     borderColor: "#fff",
   },
   inputButton: {
@@ -35,23 +33,27 @@ const styles = StyleSheet.create({
   },
   input: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 15,
     backgroundColor: "#292929",
     paddingVertical: 15,
     paddingLeft: 15,
     borderRadius: 10,
-    width: "80%",
+    width: "75%",
+    borderWidth: 1,
+    borderColor: "#fff",
   },
   button: {
     backgroundColor: "#292929",
     paddingVertical: 15,
     alignItems: "center",
     borderRadius: 10,
-    width: "80%",
+    width: "75%",
+    borderWidth: 1,
+    borderColor: "#fff",
   },
   buttonText: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 15,
   },
   loading: {
     justifyContent: "center",
