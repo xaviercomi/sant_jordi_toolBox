@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   backIcon: {
-    width: 60,
-    height: 40,
+    width: 80,
+    height: 25,
     tintColor: "#fff",
-    marginTop: 15,
+    marginTop: 35,
   },
   citaCard: {
     width: width * 0.9,

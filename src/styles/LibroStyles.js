@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     height: 25,
     marginBottom: 5,
     alignSelf: "center",
+    tintColor: "white",
   },
   filterIcon: {
     width: 35,

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   grid: {
     flex: 1,
     flexDirection: "row",
-    gap: 35,
+    gap: 20,
     padding: 20,
     justifyContent: "center",
     flexWrap: "wrap",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: width * 0.9,
-    height: height * 0.85,
+    height: height * 0.5,
     margin: 20,
     backgroundColor: "#444",
     borderRadius: 5,

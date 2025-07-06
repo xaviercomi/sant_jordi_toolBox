@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   backIcon: {
-    width: 60,
-    height: 40,
+    width: 80,
+    height: 25,
     tintColor: "#fff",
   },
   rosesContainer: {
